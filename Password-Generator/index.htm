@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+</head>
+<body>
+    <h1>Password Generator</h1>
+    <label for="length">Password Length:</label>
+    <input type="number" id="length" min="4" max="20">
+    <br>
+    <input type="checkbox" id="includeNumbers">
+    <label for="includeNumbers">Include Numbers</label>
+    <br>
+    <input type="checkbox" id="includeSymbols">
+    <label for="includeSymbols">Include Symbols</label>
+    <br>
+    <button onclick="generatePassword()">Generate Password</button>
+    <br>
+    <input type="text" id="password" readonly>
+
+    <script>
+        function generatePassword() {
+            const length = document.getElementById('length').value;
+            const includeNumbers = document.getElementById('includeNumbers').checked;
+            const includeSymbols = document.getElementById('includeSymbols').checked;
+            const password = generateRandomPassword(length, includeNumbers, includeSymbols);
+            document.getElementById('password').value = password;
+        }
+
+        function generateRandomPassword(length, includeNumbers, includeSymbols) {
+            let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            let symbols = '!@#$%^&*()_+~`|}{[]\:;?><,./-=';
+            let numbers = '0123456789';
+            let allChars = chars;
+            if (includeNumbers) allChars += numbers;
+            if (includeSymbols) allChars += symbols;
+
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                let randomIndex = Math.floor(Math.random() * allChars.length);
+                password += allChars[randomIndex];
+            }
+            return password;
+        }
+    </script>
+</body>
+</html>
+
